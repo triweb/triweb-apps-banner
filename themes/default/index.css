@@ -1,0 +1,30 @@
+ body, html {
+   height: 100%;
+   margin: 0;
+   font-family: Arial, sans-serif;
+ }
+.container {
+  display: flex;
+  height: 100vh;
+}
+.main-content {
+  flex: 1;
+  padding: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.side-content {
+  flex-basis: 25%;
+  background-color:#007BFF;
+}
+h1 {
+  margin: 0;
+  margin-bottom: 1em;
+  color: #333;
+}
+p {
+  margin: 0;
+  color: #666;
+}

@@ -1,0 +1,26 @@
+{
+  "id": "banner",
+
+  "name": "Banner",
+  "version": "0.0.1",
+
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any"
+    }
+  ],
+  "display": "standalone",
+
+  "assets": [
+    "index.html",
+
+    "icon.svg",
+
+    "themes/default/index.html",
+    "themes/default/index.css",
+    "themes/default/index.js",
+    
+    "vendor/ejs.min.js"
+  ]
+}

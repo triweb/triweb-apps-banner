@@ -1,0 +1,99 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="/vendor/ejs.min.js"></script>
+  <script src="/.../triweb.js"></script>
+
+  <script>
+
+    // Resolve domain configuration from DNS
+    // This lists TXT records under the _triweb. namespace/host/subdomain.
+    Triweb.resolver.resolveConfig('_triweb.' + window.location.hostname).then( async (domainConfig) => {
+
+      // Rewrite the domain configuration (array) into a dict-like 'siteConfig' object, which:
+      // - is indexed by keys, which means that duplicate keys will overwrite themselves,
+      // - is made available under the global window namespace, so that it can be accessed form theme JS.
+      window.siteConfig = {};
+      domainConfig.forEach((entry) => {
+        window.siteConfig[entry.key] = entry;
+      });
+      
+      // Unless otherwise specified, use the 'default' theme
+      window.siteConfig.theme ||= {value: 'default', options:{}};
+      let themeRootPath = './themes/' + window.siteConfig.theme.value + '/';
+
+      // Load the theme's HTML
+      const templateResponse = await fetch(themeRootPath + 'index.html');
+
+      if(templateResponse.ok){
+        const templateText = await templateResponse.text();
+
+        const helpers = {
+          v: (key,defaultValue) => { return window.siteConfig[key]?.value || defaultValue; }
+        };
+
+        const html = window.ejs.render(templateText, helpers, {context:window.siteConfig});
+        setInnerHTML(document.documentElement, html);
+
+      } else {
+        document.body.innerText = 'Error: Failed to load the ' + themeRootPath + 'index.html file.'
+
+      }
+
+    });
+
+    // A helper function that sets the innerHTML of an element to html,
+    // and evaluates any script tags in the same order as they appear in the html document.
+    let setInnerHTML = async function(el, html) {
+      var err, i, len, newScript, oldScript, pr, ref, rej, res, results, timer;
+      el.innerHTML = html;
+      ref = el.querySelectorAll('script');
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        oldScript = ref[i];
+        newScript = document.createElement('script');
+        Array.from(oldScript.attributes).forEach(function(attr) {
+          return newScript.setAttribute(attr.name, attr.value);
+        });
+        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+        res = null;
+        rej = null;
+        timer = null;
+        pr = new Promise(function(resolve, reject) {
+          res = resolve;
+          return rej = function(err) {
+            console.error(err);
+            return resolve();
+          };
+        });
+        if (newScript.src) {
+          newScript.onload = res;
+          newScript.onerror = rej;
+          timer = setTimeout(function() {
+            return rej("Timeout exceeded while waiting for " + newScript.src + " to finish loading.");
+          }, 1e3);
+        } else {
+          res();
+        }
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+        try {
+          await(pr);
+          results.push(clearTimeout(timer));
+        } catch (_error) {
+          err = _error;
+          console.log(err);
+          results.push(true);
+        }
+      }
+      return results;
+    }
+
+  </script>
+
+</head>
+
+<body></body>
+
+</html>
