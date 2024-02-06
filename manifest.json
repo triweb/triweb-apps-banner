@@ -21,6 +21,7 @@
     "themes/default/index.css",
     "themes/default/index.js",
     
-    "vendor/ejs.min.js"
+    "vendor/ejs.js",
+    "vendor/snarkdown.js"
   ]
 }

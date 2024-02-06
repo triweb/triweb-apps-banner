@@ -3,50 +3,16 @@
   <meta charset="utf-8" />
   <link rel="manifest" href="/manifest.json">
 
-  <script src="/vendor/ejs.min.js"></script>
+  <script src="/vendor/ejs.js"></script>
+  <script src="/vendor/snarkdown.js"></script>
+
   <script src="/.../triweb.js"></script>
 
   <script>
 
-    // Resolve domain configuration from DNS
-    // This lists TXT records under the _triweb. namespace/host/subdomain.
-    Triweb.resolver.resolveConfig('_triweb.' + window.location.hostname).then( async (domainConfig) => {
-
-      // Rewrite the domain configuration (array) into a dict-like 'siteConfig' object, which:
-      // - is indexed by keys, which means that duplicate keys will overwrite themselves,
-      // - is made available under the global window namespace, so that it can be accessed form theme JS.
-      window.siteConfig = {};
-      domainConfig.forEach((entry) => {
-        window.siteConfig[entry.key] = entry;
-      });
-      
-      // Unless otherwise specified, use the 'default' theme
-      window.siteConfig.theme ||= {value: 'default', options:{}};
-      let themeRootPath = './themes/' + window.siteConfig.theme.value + '/';
-
-      // Load the theme's HTML
-      const templateResponse = await fetch(themeRootPath + 'index.html');
-
-      if(templateResponse.ok){
-        const templateText = await templateResponse.text();
-
-        const helpers = {
-          v: (key,defaultValue) => { return window.siteConfig[key]?.value || defaultValue; }
-        };
-
-        const html = window.ejs.render(templateText, helpers, {context:window.siteConfig});
-        setInnerHTML(document.documentElement, html);
-
-      } else {
-        document.body.innerText = 'Error: Failed to load the ' + themeRootPath + 'index.html file.'
-
-      }
-
-    });
-
     // A helper function that sets the innerHTML of an element to html,
     // and evaluates any script tags in the same order as they appear in the html document.
-    let setInnerHTML = async function(el, html) {
+    const setInnerHTML = async function(el, html) {
       var err, i, len, newScript, oldScript, pr, ref, rej, res, results, timer;
       el.innerHTML = html;
       ref = el.querySelectorAll('script');
@@ -88,8 +54,137 @@
         }
       }
       return results;
+    };
+
+    // A helper function that passes the given text through a Markdown parser.
+    const markdown = function(text, opts={}) {
+      // Replace all references to newline with actual newlines
+      let t = text.replaceAll("\\n", "\n");
+
+      // With 'plain' option set, we are not returning <p> tags
+      if (opts.plain){
+        return window.snarkdown(text);
+
+
+      // Otherwise, <p> tags are expected to be returned
+      } else {
+        t = '<p>' + t.split("\n").map((line) => {
+
+          if (line.match(/^\s*$/)) {
+            return '</p><p>';
+          } else {
+            return window.snarkdown(line);
+          }
+
+        }).join(" ") + '</p>'
+
+        return t;
+      }
+    };
+    
+    window.siteConfig = {
+      theme: null,
+      themeOptions: {},
+      slots: {},
+      dynamicSlots: []
+    };
+
+    // Converts and applies the domain configuration as received from Triweb.resolveConfig to the site configuration (siteConfig)
+    let applyDomainConfig = async function(domainConfig) {
+
+      // Iterate over the DNS records and parse them into theme config or slot config
+      domainConfig.forEach((entry) => {
+
+        // theme configuration
+        if (entry.key === 'theme') {
+          siteConfig.theme ||= entry.value;
+          siteConfig.themeOptions = Object.assign(siteConfig.themeOptions, entry.options);
+          return;
+        }
+
+        // slots configuration
+        let md = (entry.key.match(/\[(.+?)\](\[(\d+)\])?/) || [])
+        let slot = md[1];
+        let idx = parseInt(md[3] || 0, 10);
+
+        if (slot) {
+          if (siteConfig.slots[slot]) {
+            siteConfig.slots[slot].options = Object.assign({}, siteConfig.slots[slot].options, entry.options);
+            siteConfig.slots[slot].values[idx] ||= { key:entry.key, value:null, options:{} }
+            siteConfig.slots[slot].values[idx].value ||= entry.value;
+            siteConfig.slots[slot].values[idx].options = Object.assign({}, siteConfig.slots[slot].values[idx].options, entry.options)
+
+          } else {
+            entry.values = [];
+            entry.values[idx] = entry;
+            siteConfig.slots[slot] = Object.assign({}, entry);
+
+          }
+
+          // keep tabs on used dynamic slots
+          if (String(parseInt(slot, 10)) === slot && siteConfig.dynamicSlots.indexOf(slot) < 0) {
+            siteConfig.dynamicSlots.push(slot);
+          }
+
+        }
+      });
+
+      // Flatten slot values array by joining them with newlines into a single string value
+      Object.keys(siteConfig.slots).forEach( (k) => {
+        siteConfig.slots[k].value = siteConfig.slots[k].values.map( (v) => v.value ).join("\n");
+      });
+
+      // Sort dynamic slots list
+      siteConfig.dynamicSlots = siteConfig.dynamicSlots.sort( (a,b) => {
+        a = parseInt(a, 10); b = parseInt(b, 10);
+        return b - a;
+      });
+
+      // Unless otherwise specified, use the 'default' theme
+      siteConfig.theme ||= 'default'
+      
+      // Derive the theme's root path
+      let themeRootPath = './themes/' + siteConfig.theme + '/';
+
+      // Load the theme's HTML
+      const templateResponse = await fetch(themeRootPath + 'index.html');
+
+      if(templateResponse.ok){
+        const templateText = await templateResponse.text();
+
+        // Expose following helper functions to the template
+        const helpers = {
+          v: (slotName,defaultValue) => { return (siteConfig.slots[slotName]?.value || defaultValue); },
+          o: (slotName, optionKey, defaultValue) => { return (siteConfig.slots[slotName]?.options[optionKey] || defaultValue); },
+          children: (slotName) => { return (siteConfig.slots[slotName]?.values || []).filter(n => n) },
+          markdown: (text, opts={}) => { return markdown(text, opts); },
+          dynamicSlots: () => { return siteConfig.dynamicSlots; }
+        };
+
+        const html = window.ejs.render(templateText, helpers, {context:siteConfig});
+        setInnerHTML(document.documentElement, html);
+
+      } else {
+        document.body.innerText = 'Error: Failed to load the ' + themeRootPath + 'index.html file.'
+
+      }
+
+    };
+
+    const storeDomainConfig = function(domainConfig){
+      window.localStorage.setItem('triweb-apps-banner-domainConfig', JSON.stringify(domainConfig));
+      return domainConfig;
     }
 
+    const restoreDomainConfig = function(){
+      const domainConfig = JSON.parse(window.localStorage.getItem('triweb-apps-banner-domainConfig') || '{}');
+      return applyDomainConfig(domainConfig);
+    }
+
+    // Resolve domain configuration from DNS and apply the user-selected theme, its configuration, and content.
+    // Theme config and content is stored inside TXT records under the _triweb. subdomain of the current domain.
+    Triweb.resolver.resolveConfig('_triweb.' + window.location.hostname).then(storeDomainConfig).then(applyDomainConfig).catch(restoreDomainConfig);
+    
   </script>
 
 </head>

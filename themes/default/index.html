@@ -10,7 +10,8 @@
 
   <style>
     .side-content {
-      background-color:<%= v('color','#007BFF') %> !important;
+      background-color:<%= o('sidebar', 'color','#007BFF') %> !important;
+      <% if ( o('sidebar', 'img', false) ) { %>background-image:url(<%= o('sidebar', 'img', 'none') %>);background-size:cover; background-repeat:no-repeat;<% } %>
     }
   </style>
 </head>
@@ -19,8 +20,17 @@
 
   <div class="container">
     <div class="main-content">
-      <h1><%= v('heading','') %></h1>
-      <p><%= v('text','') %></p>
+      <h1 style="color:<%= o('h1', 'color','inherit') %>"><%= v('h1','') %></h1>
+      <h2 style="color:<%= o('h2', 'color','inherit') %>"><%= v('h2','') %></h2>
+      <% for(let p of children('p') ){ %>
+        <p><%- markdown(p.value, {plain:true}) %></p>
+      <% } %>
+      <div class="_buttons">
+        <% for(let btn of children('btn') ){ %>
+          <a href="<%= btn.options.href %>" class="<%= btn.options.style %>"><%= btn.value %></a>
+        <% } %>
+        <%- markdown( v('buttons', ''), {plain:true}) %>
+      </div>
     </div>
     <div class="side-content"></div>
   </div>

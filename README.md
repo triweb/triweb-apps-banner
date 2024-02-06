@@ -13,8 +13,8 @@ www.mydomain.com            CNAME   triweb.io.
 # by adding TXT records under the `_triweb.` subdomain:    
 _triweb.www.mydomain.com    TXT     "app https://raw.githubusercontent.com/triweb/triweb-apps-banner/master/manifest.json"
 _triweb.www.mydomain.com    TXT     "theme default"
-_triweb.www.mydomain.com    TXT     "heading 'Welcome to my personal website'"
-_triweb.www.mydomain.com    TXT     "text 'I love cats and rabbits'"
+_triweb.www.mydomain.com    TXT     "[h1] Welcome to my personal website"
+_triweb.www.mydomain.com    TXT     "[p] I love cats and rabbits"
 ```
 
 To see all available themes and their slots, see [triweb-apps-banner/themes](https://github.com/triweb/triweb-apps-banner/tree/master/themes/)
