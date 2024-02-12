@@ -1,0 +1,16 @@
+{
+  "id": "banner-themes-default",
+
+  "name": "Banner - Default Theme",
+  "version": "0.0.1",
+
+  "dependencies": {
+    "banner": "../../"
+  },
+
+  "assets": [
+    "theme/index.html",
+    "theme/index.css",
+    "theme/index.js"
+  ]
+}

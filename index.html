@@ -83,7 +83,6 @@
     };
     
     window.siteConfig = {
-      theme: null,
       themeOptions: {},
       slots: {},
       dynamicSlots: []
@@ -97,7 +96,6 @@
 
         // theme configuration
         if (entry.key === 'theme') {
-          siteConfig.theme ||= entry.value;
           siteConfig.themeOptions = Object.assign(siteConfig.themeOptions, entry.options);
           return;
         }
@@ -140,11 +138,8 @@
         return b - a;
       });
 
-      // Unless otherwise specified, use the 'default' theme
-      siteConfig.theme ||= 'default'
-      
       // Derive the theme's root path
-      let themeRootPath = './themes/' + siteConfig.theme + '/';
+      let themeRootPath = './theme/';
 
       // Load the theme's HTML
       const templateResponse = await fetch(themeRootPath + 'index.html');
@@ -165,7 +160,7 @@
         setInnerHTML(document.documentElement, html);
 
       } else {
-        document.body.innerText = 'Error: Failed to load the ' + themeRootPath + 'index.html file.'
+        document.body.innerText = 'Error: Failed to load the ' + themeRootPath + 'index.html file. Please make sure a theme has been selected through the "app" TXT record in DNS.'
 
       }
 
