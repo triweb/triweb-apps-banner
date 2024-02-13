@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title><%= meta('title', '') %></title>
+		<meta name="description" content="<%= meta('description', '') %>"/>
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/theme/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="/theme/assets/css/noscript.css" /></noscript>
+		<style>
+			#bg:before {
+				<% if (o('theme', 'bg', '').match(/\//)) { %>
+					background-image: url("<%= o('theme', 'bg', '/theme/images/bg.jpg') %>") !important;
+				<%  } else { %>
+					background-image: none !important;
+					background-color: <%= o('theme', 'bg', 'black') %> !important;
+				<% } %>
+			}
+		</style>
+		<style><%= v('css', '') %></style>
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="logo">
+							<span class="icon fa-<%= o('theme', 'icon', 'gem') %>"></span>
+						</div>
+						<div class="content">
+							<div class="inner">
+								<h1 style="color:<%= o('h1', 'color','inherit') %>"><%= v('h1','') %></h1>
+								<% for(let p of children('p') ){ %>
+								<p><%- markdown(p.value, {plain:true}) %></p>
+								<% } %>
+							</div>
+						</div>
+						<nav>
+							<ul>
+								<% for(let slot of dynamicSlots()){ %>
+									<li><a href="#<%= o(slot, 'ref', slot) %>"><%= o(slot, 'title') %></a></li>
+								<% } %>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+						<% for(let slot of dynamicSlots()){ %>
+							<article id="<%= o(slot, 'ref', slot) %>">
+								<h2 class="major"><%= o(slot, 'title', '') %></h2>
+								<% if ( o(slot, 'img', false) ) { %><span class="image main"><img src="<%= o(slot, 'img') %>" alt="" /></span><% } %>
+								<%- markdown( v(slot, '') ) %>
+							</article>
+						<% } %>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright"><%= v('copyright', '') %> Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="/theme/assets/js/jquery.min.js"></script>
+			<script src="/theme/assets/js/browser.min.js"></script>
+			<script src="/theme/assets/js/breakpoints.min.js"></script>
+			<script src="/theme/assets/js/util.js"></script>
+			<script src="/theme/assets/js/main.js"></script>
+			<script>
+				if (window.location.hash !== ''){
+					const originalHash = window.location.hash;
+					window.location.hash = '';
+					setTimeout( () => {
+					 window.location.hash = originalHash;
+					}, 500)
+				}
+			</script>
+			<script>
+				$( document ).ready(function(){
+					setTimeout( () => {
+						let minWidth = Math.ceil(Math.max.apply(Math,$('#header nav li').map(function(idx, el){ return $(el).outerWidth(); }).toArray()));
+						$('#header nav li').css('min-width', minWidth);
+					}, 500);
+				});
+			</script>
+	</body>
+</html>

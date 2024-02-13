@@ -1,0 +1,30 @@
+{
+  "id": "banner-themes-html5up-dimension",
+
+  "name": "Banner - Html5up Dimension Theme",
+  "version": "0.0.1",
+
+  "dependencies": {
+    "banner": "../../../"
+  },
+
+  "assets": [
+    "theme/index.html",
+    "theme/images/bg.jpg",
+
+    "theme/assets/css/fontawesome-all.min.css",
+    "theme/assets/css/main.css",
+    "theme/assets/css/noscript.css",
+
+    "theme/assets/js/breakpoints.min.js",
+    "theme/assets/js/browser.min.js",
+    "theme/assets/js/jquery.min.js",
+    "theme/assets/js/main.js",
+    "theme/assets/js/util.js",
+
+    "theme/assets/webfonts/fa-brands-400.woff",
+    "theme/assets/webfonts/fa-regular-400.woff",
+    "theme/assets/webfonts/fa-regular-400.woff",
+    "theme/assets/webfonts/fa-solid-900.woff"
+  ]
+}
