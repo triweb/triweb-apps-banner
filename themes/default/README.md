@@ -16,21 +16,27 @@ You can access a preview of this theme on [banner.triweb.dev](https://banner.tri
 ```
 www.mydomain.example            CNAME   triweb.io.
 
-_triweb.www.mydomain.example    TXT     "app banner"
-_triweb.www.mydomain.example    TXT     "theme default"
+_triweb.www.mydomain.example    TXT     "app banner/themes/default"
+
+_triweb.www.mydomain.example    TXT     "meta-title Triweb Banner - default theme"
+_triweb.www.mydomain.example    TXT     "meta-description Publish simple websites directly from your domain control panel in minutes!"
+
 _triweb.www.mydomain.example    TXT     "[h1] Hello world!"
+_triweb.www.mydomain.example    TXT     "[h2] This website was set up and launched directly through the domain control panel %F0%9F%AA%84"
+
+_triweb.www.mydomain.example    TXT     "[p][0] If you have a domain name, you can also use [Triweb Banner](https://triweb.com/apps/banner) to create, publish, and edit basic websites directly from your domain control panel, **without the need for web servers, hosting providers, or any coding kn" "owledge.** Plus, an amazing feature - once someone visits your site, it becomes accessible even in offline mode."
+_triweb.www.mydomain.example    TXT     "[p][1] [Take a look](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.banner.triweb.dev&run=toolpage) at how this website was made - everything, including its theme, texts, and buttons was set up using [DNS TXT records](https://en.wikipedia.org/w" "iki/TXT_record)."
+
+_triweb.www.mydomain.example    TXT     "[btn][0] Set up on your domain"
+_triweb.www.mydomain.example    TXT     "[btn][0] href=https://triweb.com/apps/banner style=primary"
+_triweb.www.mydomain.example    TXT     "[btn][1] See available themes"
+_triweb.www.mydomain.example    TXT     "[btn][1] href=https://github.com/triweb/triweb-apps-banner/tree/master/themes/"
+
 ```
 
 ## Available customization slots
 
-The `default` theme has following customization slots:
-
-### title
-
-**Name:**       title<br/>
-**Value:**      The title of the webpage - used as a content for the HTML title tag<br/>
-**Options:**    - none -<br/>
-**Example TXT record:** ```"[title] My webpage" ```
+This theme has following customization slots:
 
 ### h1
 

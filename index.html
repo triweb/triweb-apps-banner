@@ -83,7 +83,7 @@
     };
     
     window.siteConfig = {
-      themeOptions: {},
+      meta: {},
       slots: {},
       dynamicSlots: []
     };
@@ -93,15 +93,16 @@
 
       // Iterate over the DNS records and parse them into theme config or slot config
       domainConfig.forEach((entry) => {
-
-        // theme configuration
-        if (entry.key === 'theme') {
-          siteConfig.themeOptions = Object.assign(siteConfig.themeOptions, entry.options);
+        
+        // Put values of meta- tags into the siteConfig.meta
+        let metaKey = {'meta-title':'title', 'meta-description':'description', 'meta-keywords':'keywords'}[entry.key];
+        if (metaKey) {
+          siteConfig.meta[metaKey] = entry.value;
           return;
         }
 
         // slots configuration
-        let md = (entry.key.match(/\[(.+?)\](\[(\d+)\])?/) || [])
+        let md = (entry.key.match(/\[(.+?)\](\[(\d+)\])?/) || []);
         let slot = md[1];
         let idx = parseInt(md[3] || 0, 10);
 
@@ -153,7 +154,8 @@
           o: (slotName, optionKey, defaultValue) => { return (siteConfig.slots[slotName]?.options[optionKey] || defaultValue); },
           children: (slotName) => { return (siteConfig.slots[slotName]?.values || []).filter(n => n) },
           markdown: (text, opts={}) => { return markdown(text, opts); },
-          dynamicSlots: () => { return siteConfig.dynamicSlots; }
+          dynamicSlots: () => { return siteConfig.dynamicSlots; },
+          meta: (name, defaultValue) => { return (siteConfig.meta[name] || defaultValue); }
         };
 
         const html = window.ejs.render(templateText, helpers, {context:siteConfig});
@@ -166,20 +168,15 @@
 
     };
 
-    const storeDomainConfig = function(domainConfig){
-      window.localStorage.setItem('triweb-apps-banner-domainConfig', JSON.stringify(domainConfig));
-      return domainConfig;
-    }
-
-    const restoreDomainConfig = function(){
-      const domainConfig = JSON.parse(window.localStorage.getItem('triweb-apps-banner-domainConfig') || '{}');
-      return applyDomainConfig(domainConfig);
-    }
-
-    // Resolve domain configuration from DNS and apply the user-selected theme, its configuration, and content.
+    // Initialize Triweb.Container to resolve domain configuration from DNS, and then apply the user-selected theme, its configuration, and content.
     // Theme config and content is stored inside TXT records under the _triweb. subdomain of the current domain.
-    Triweb.resolver.resolveConfig('_triweb.' + window.location.hostname).then(storeDomainConfig).then(applyDomainConfig).catch(restoreDomainConfig);
-    
+    Triweb.Container.init().then( () => {
+      applyDomainConfig(Triweb.Container.domainConfig);
+
+    }).catch( () => {
+      document.body.innerText = 'Error: Unable to resolve domain configuration. Please try again later or contact the website administrator.';
+
+    });
   </script>
 
 </head>
