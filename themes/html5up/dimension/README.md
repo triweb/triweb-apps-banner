@@ -6,8 +6,8 @@ A port of the [Dimension website template](https://html5up.net/dimension) made b
 
 ## Live demo
 
-You can access a preview of this theme on [dimension.banner.triweb.dev](https://dimension.banner.triweb.dev/).<br/>
-[Click here](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.dimension.banner.triweb.dev&run=toolpage) to see the live TXT records that are used for the preview.
+Experience this theme live at [dimension.banner.triweb.dev](https://dimension.banner.triweb.dev/).<br/>
+To view the TXT records powering this demo, click [here](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.dimension.banner.triweb.dev&run=toolpage).
 
 ## Example domain configuration
 

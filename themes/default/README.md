@@ -2,14 +2,14 @@
 
 **Theme identifier:** `default`
 
-A minimalistic theme that can be used to build simple webpages.
+A sleek, minimalist theme designed for creating simple yet beautiful webpages.
 
 ![Default theme](preview.png)
 
 ## Live demo
 
-You can access a preview of this theme on [banner.triweb.dev](https://banner.triweb.dev/).<br/>
-[Click here](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.banner.triweb.dev&run=toolpage) to see the live TXT records that are used for this preview. 
+Experience this theme live at [banner.triweb.dev](https://banner.triweb.dev/).<br/>
+To view the TXT records powering this demo, click [here](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.banner.triweb.dev&run=toolpage). 
 
 ## Example domain configuration
 
@@ -36,7 +36,7 @@ _triweb.www.mydomain.example    TXT     "[btn][1] href=https://github.com/triweb
 
 ## Available customization slots
 
-This theme has following customization slots:
+This theme offers several slots for customization, allowing you to personalize headings, paragraphs, buttons, and more. Here's an overview:
 
 ### h1
 
