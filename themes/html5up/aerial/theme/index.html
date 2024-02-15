@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<!--
+	Aerial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title><%= meta('title', '') %></title>
+		<meta name="description" content="<%= meta('description', '') %>"/>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/theme/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="/theme/assets/css/noscript.css" /></noscript>
+		<% if (o('theme', 'bg', false)) { %>
+		<style>
+			#bg {
+				<% if (o('theme', 'bg', '').match(/\//)) { %>
+				background-image: url("<%= o('theme', 'bg', '/theme/images/bg.jpg') %>") !important;
+				<%  } else { %>
+				background-image: none !important;
+				background-color: <%= o('theme', 'bg', 'black') %> !important;
+				<% } %>
+			}
+		</style>
+		<% } %>
+		<style><%= v('css', '') %></style>
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="bg"></div>
+			<div id="overlay"></div>
+			<div id="main">
+
+				<!-- Header -->
+					<header id="header">
+						<h1 style="color:<%= o('h1', 'color','inherit') %>"><%= v('h1','') %></h1>
+						<% for(let p of children('p') ){ %>
+						<p><%- markdown(p.value, {plain:true}) %></p>
+						<% } %>
+						<nav>
+							<ul>
+								<% for(let link of children('links') ){ %>
+								<% if (!link.options.icon) { %>
+									<% link.options.icon ||= ({'twitter.com':'twitter', 'facebook.com':'facebook-f', 'dribbble.com':'dribbble', 'github.com':'github', 'linkedin.com':'linkedin', 'instagram.com': 'instagram', 'youtube.com':'youtube', 'whatsapp.com':'whatsapp', 'tiktok.com':'tiktok', 'snapchat.com':'snapchat'})[((link.value || '').match(/:\/\/(www\.|..\.)?(.+?)\//) || [])[2]] %>
+									<% if (link.options.icon) { link.options.brand = true; } %>
+									<% if (String(link.value).match(/^mailto:/)) { link.options.icon = 'envelope' } %>
+								<% } %>
+								<li><a href="<%= link.value || '#' %>" class="icon<% if (link.options.brand) { %> brands<% } else { %> solid<% } %> fa-<%= link.options.icon || link %>" title="<%= link.options.title || '' %>"><span class="label"><%= link.options.label || link.options.title || '' %></span></a></li>
+								<% } %>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<span class="copyright"><%= v('copyright', '') %> Design: <a href="http://html5up.net">HTML5 UP</a>.</span>
+					</footer>
+
+			</div>
+		</div>
+		<script>
+			window.onload = function() { document.body.classList.remove('is-preload'); }
+			window.ontouchmove = function() { return false; }
+			window.onorientationchange = function() { document.body.scrollTop = 0; }
+		</script>
+	</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "id": "banner-themes-html5up-aerial",
+
+  "name": "Aerial - Html5Up Aerial Theme",
+  "version": "0.0.1",
+
+  "dependencies": {
+    "banner": "../../../"
+  },
+
+  "assets": [
+    "theme/index.html",
+
+    "theme/assets/css/fontawesome-all.min.css",
+    "theme/assets/css/main.css",
+    "theme/assets/css/noscript.css",
+
+    "theme/assets/css/images/bg.jpg",
+    "theme/assets/css/images/overlay.svg",
+    "theme/assets/css/images/overlay-pattern.png",
+    
+    "theme/assets/webfonts/fa-brands-400.woff",
+    "theme/assets/webfonts/fa-regular-400.woff",
+    "theme/assets/webfonts/fa-solid-900.woff"
+  ]
+}
