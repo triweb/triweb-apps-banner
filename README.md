@@ -11,8 +11,7 @@ www.mydomain.com            CNAME   triweb.io.
 
 # Deploy the Banner app, and configure it with desired theme and texts
 # by adding TXT records under the `_triweb.` subdomain:    
-_triweb.www.mydomain.com    TXT     "app https://raw.githubusercontent.com/triweb/triweb-apps-banner/master/manifest.json"
-_triweb.www.mydomain.com    TXT     "theme default"
+_triweb.www.mydomain.com    TXT     "app banner/themes/default"
 _triweb.www.mydomain.com    TXT     "[h1] Welcome to my personal website"
 _triweb.www.mydomain.com    TXT     "[p] I love cats and rabbits"
 ```
@@ -28,5 +27,5 @@ and point your domain at the customized fork like below:
 
 ```
 www.mydomain.com            CNAME   triweb.io.   
-_triweb.www.mydomain.com    TXT     "app https://raw.githubusercontent.com/your-github-username/your-fork-name/master/manifest.json"
+_triweb.www.mydomain.com    TXT     "app https://raw.githubusercontent.com/your-github-username/your-fork-name/master/themes/default/manifest.json"
 ```
