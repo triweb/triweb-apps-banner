@@ -5,7 +5,7 @@
   "version": "0.0.1",
 
   "dependencies": {
-    "banner": "../../"
+    "banner": "https://apps.triweb.com/banner/manifest.json"
   },
 
   "assets": [

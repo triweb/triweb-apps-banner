@@ -5,7 +5,7 @@
   "version": "0.0.1",
 
   "dependencies": {
-    "banner": "../../../"
+    "banner": "https://apps.triweb.com/banner/manifest.json"
   },
 
   "assets": [
@@ -23,7 +23,6 @@
     "theme/assets/js/util.js",
 
     "theme/assets/webfonts/fa-brands-400.woff",
-    "theme/assets/webfonts/fa-regular-400.woff",
     "theme/assets/webfonts/fa-regular-400.woff",
     "theme/assets/webfonts/fa-solid-900.woff"
   ]
