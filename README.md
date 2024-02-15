@@ -23,7 +23,7 @@ To deploy the Banner app on your domain (e.g., `www.mydomain.com`), follow these
 
 2. **Deploy the Banner TWA** 
  
-    Add TXT records under the `_triweb.` subdomain to deploy the Banner app and configure it with the desired theme and text:
+    While still in your domain's control panel, add TXT records under the `_triweb.` subdomain to deploy the Banner app and configure it with the desired theme and text:
 
     ```
     _triweb.www.mydomain.com    TXT     "app banner/themes/default"
