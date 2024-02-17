@@ -1,6 +1,6 @@
 # Banner
 
-Banner is a simple [triweb app](https://triweb.com) (TWA) that allows you to setup a static website directly from your domain control panel.
+Banner is a simple [triweb app](https://triweb.com/concepts/triweb-app) (TWA) that allows you to setup a static website directly from your domain control panel.
 No external servers or coding experience is needed as **the website theme and texts are configured entirely through the DNS TXT records**.
 
 ## Demos
