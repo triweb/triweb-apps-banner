@@ -171,7 +171,7 @@
     // Initialize Triweb.Container to resolve domain configuration from DNS, and then apply the user-selected theme, its configuration, and content.
     // Theme config and content is stored inside TXT records under the _triweb. subdomain of the current domain.
     Triweb.Container.init().then( () => {
-      applyDomainConfig(Triweb.Container.domainConfig);
+      applyDomainConfig(Triweb.Container.args);
 
     }).catch( () => {
       document.body.innerText = 'Error: Unable to resolve domain configuration. Please try again later or contact the website administrator.';
