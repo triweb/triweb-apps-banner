@@ -6,8 +6,9 @@ A port of the [Aerial website template](https://html5up.net/aerial) made by [htm
 
 ## Live demo
 
-Experience this theme live at  [aerial.banner.triweb.dev](https://aerial.banner.triweb.dev/).<br/>
-To view the TXT records powering this demo, click [here](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.aerial.banner.triweb.dev&run=toolpage).
+**[https://aerial.banner.triweb.dev](https://aerial.banner.triweb.dev/)**
+
+To view the TXT records powering this demo, [click here](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.aerial.banner.triweb.dev&run=toolpage).
 
 ## Example domain configuration
 
