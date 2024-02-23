@@ -71,11 +71,11 @@ This theme offers several slots for customization, allowing you to personalize h
 
 **Name:**       btn<br/>
 **Value:**      One or more action buttons that appear below the text<br/>
-**Options:**    `href` (the target URL), `style` (one of: primary, secondary)<br/>
+**Options:**    `href` (the target URL), `style` (optional, one of: primary, secondary), `icon` (optional, utf-8 emoji icon)<br/>
 **Example TXT records:**
 ```
 [btn][0] View my GitHub profile
-[btn][0] href=https://github.com/ style=primary
+[btn][0] href=https://github.com/ style=primary icon=😊
 [btn][1] Send me an email
 [btn][1] href=mailto:me@mydomain.example
 ```

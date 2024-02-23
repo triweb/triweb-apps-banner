@@ -26,11 +26,13 @@
       <% for(let p of children('p') ){ %>
         <p><%- markdown(p.value, {plain:true}) %></p>
       <% } %>
-      <div class="_buttons">
+      <div class="buttons">
         <% for(let btn of children('btn') ){ %>
-          <a href="<%= btn.options.href %>" class="<%= btn.options.style %>"><%= btn.value %></a>
+          <a href="<%= btn.options.href %>" class="<%= btn.options.style %>">
+            <% if (btn.options.icon) { %><span class="_icon"><%= btn.options.icon %></span><% } %>
+            <%= btn.value %>
+          </a>
         <% } %>
-        <%- markdown( v('buttons', ''), {plain:true}) %>
       </div>
     </div>
     <div class="side-content"></div>
