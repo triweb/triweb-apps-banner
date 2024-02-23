@@ -1,8 +1,4 @@
-# Themes
-
-Explore a variety of themes to customize the look and feel of your Banner website. Each theme offers unique designs and layouts to suit different preferences and purposes.
-
-## Available themes
+# Banner Themes
 
 ### [default](default/)
 
