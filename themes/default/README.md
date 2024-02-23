@@ -1,15 +1,14 @@
 # Default Theme
 
-**Theme identifier:** `default`
-
 A sleek, minimalist theme designed for creating simple yet beautiful webpages.
 
 ![Default theme](preview.png)
 
 ## Live demo
 
-Experience this theme live at [banner.triweb.dev](https://banner.triweb.dev/).<br/>
-To view the TXT records powering this demo, click [here](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.banner.triweb.dev&run=toolpage). 
+**[https://banner.triweb.dev](https://banner.triweb.dev/)**
+
+To view the TXT records powering this demo, [click here](https://mxtoolbox.com/SuperTool.aspx?action=txt%3a_triweb.banner.triweb.dev&run=toolpage). 
 
 ## Example domain configuration
 
@@ -71,13 +70,13 @@ This theme offers several slots for customization, allowing you to personalize h
 
 **Name:**       btn<br/>
 **Value:**      One or more action buttons that appear below the text<br/>
-**Options:**    `href` (the target URL), `style` (optional, one of: primary, secondary), `icon` (optional, utf-8 emoji icon)<br/>
+**Options:**    `href` (the target URL), `style` (optional, one of: primary, secondary), `icon` (optional, urlencoded utf-8 emoji icon)<br/>
 **Example TXT records:**
 ```
 [btn][0] View my GitHub profile
-[btn][0] href=https://github.com/ style=primary icon=😊
+[btn][0] href=https://github.com/ style=primary
 [btn][1] Send me an email
-[btn][1] href=mailto:me@mydomain.example
+[btn][1] href=mailto:me@mydomain.example icon=%F0%9F%93%A7
 ```
 
 ### sidebar

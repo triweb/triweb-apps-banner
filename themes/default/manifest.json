@@ -10,7 +10,6 @@
 
   "assets": [
     "theme/index.html",
-    "theme/index.css",
-    "theme/index.js"
+    "theme/index.css"
   ]
 }
