@@ -5,7 +5,7 @@ No external servers or coding experience is needed as **the website theme and te
 
 ## Demos
 
-- **Default theme: https://banner.triweb.dev/**
+- **https://banner.triweb.dev/**
 -  https://aerial.banner.triweb.dev/
 -  https://dimension.banner.triweb.dev/ 
 
